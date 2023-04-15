@@ -9,19 +9,30 @@ app.use(express.json());
 // definir los entry point de la API
 // definir la ruta (la url) en donde va a responder nuestra API
 
-app.get(
-    `api/sumar`,
+app.use(function(req , res, next){
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods","POST");
+    res.header("Access-Control-Allow-Headers","Content-Type");
+    next();
+
+}
+);
+
+app.post(
+    `/api/sumar`,
     // se requiere dos objetos uno que represente la peticion y uno la respuesta
     //req request. res respuesta
     (req, res)=>{
-        //aqui va el procesamiento de la petición
+        //to Do: aqui va el procesamiento de la petición
         console.log("alguien esta conectandose a esta ruta");
-        res.json(req.body);
+        const {numero_1, numero_2}=req.body;
+        const resultado=parseFloat(numero_1)+parseFloat(numero_2);
+        res.json(resultado);
     }
 );
 
 app.post(
-    `api/restar`,
+    `/api/restar`,
     (req, res)=>{
 
         /*forma larga
@@ -30,13 +41,13 @@ app.post(
         const resultado=n1-n2;
         res.json(resultado);*/
         // forma corta
-        const {numero_1, numero_2}=req.body;
+        const {numero_1 , numero_2}=req.body;
         const resultado=numero_1-numero_2;
         res.json(resultado);
     }
 );
 app.post(
-    `api/dividir`,
+    `/api/dividir`,
     (req, res)=>{
 
         let resultado;
@@ -70,9 +81,9 @@ app.post(
 //3 crear un servico para escuchar peticiones 
 //listen tiene dos parametros primero el puerto, segundo argumento el nombre del dominio, luego funcion callback
 app.listen(
-    3001,
+    3000,
     ()=>{
-        console.log("servidor ejecutandose en el puerto 3001");
+        console.log("servidor ejecutandose en el puerto 3000");
 
     }
 );
