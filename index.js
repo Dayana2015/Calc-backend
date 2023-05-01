@@ -1,8 +1,8 @@
 // crear un objeto express incluir carpeta express
 const express=require(`express`);
+const bodyparser= require(`body-parser`);
 
 //2 crear un objeto que represente nuestra aplicacion
-
 const app=express();
 
 app.use(express.json());
@@ -76,6 +76,20 @@ app.post(
     }
 
 );
+
+
+app.post(
+    //ruta en la que va a responder
+    '/api/multiplicar',
+    // metodo constructor de la respuesta y peticion
+    (req, res) => {
+        const { numero_1, numero_2 } = req.body;
+        let resultado;
+
+        resultado = numero_1 * numero_2;
+
+        res.json(resultado);
+    });
 
 
 //3 crear un servico para escuchar peticiones 
